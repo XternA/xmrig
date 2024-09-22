@@ -31,24 +31,19 @@ A top mining pool choice for XMR is [SupportXMR](https://supportxmr.com/). To mi
 
 ### Run Recommendation
 
-#### Without config file
-```markdown
-docker run -d --restart always --name xmrig xterna/xmrig -k --tls -o <POOL:PORT> -u <USER> -p <PASSWORD>
-```
-
 #### With config file
+Configure the config file at https://xmrig.com/wizard.
 ```markdown
 docker run -d -v /host/path/to/file/config.json:/app/config.json --restart always --name xmrig xterna/xmrig
 ```
 You must map the config to the exact path of the container to override the file, or it won't be used. Any changes to the `config.json` will require restarting the container.
 
-```
-docker restart xmrig
-```
+ℹ️ After the miner starts for the first time it will inflate the config with more settings. You can then fine tune the config to match your setup. Use this guide as reference: https://xmrig.com/docs/miner/config.
 
-### Stop/Pause
-To stop or pause the miner:
+### Restart/Stop/Pause
+
 ```sh
+docker restart xmrig
 docker stop xmrig
 docker pause xmrig
 ```
@@ -60,16 +55,23 @@ docker run --rm xterna/xmrig --help
 This will list the commands of the actual xmrig miner.
 
 ## Improve Performance (Linux)
-By increasing the `HugePages` memory management feature in Linux, you can easily increase the performance gain by up to 30%.
+By increasing the `huge pages` memory management feature in Linux, you can easily increase the performance gain by up to 30%.
 
-Using the following command will set the `HugePages`:
+> Please note 1280 pages means 2560 MB of memory will be reserved for huge pages and become not available for other usage, in automatic mode the miner reserve precise count of huge pages.
 
+**Temporary (until next reboot) reserve huge pages:**
 ```sh
-# Get the script from the container
-docker cp xterna/xmrig:/app/huge-page.sh .
-
-# Run the script to adjust the HugePages
-sh huge-page.sh
+sudo sysctl -w vm.nr_hugepages=1280
 ```
 
-You may need to restart the container in order for the changes to take effect.
+**Permanent huge pages reservation:**
+```sh
+sudo bash -c "echo vm.nr_hugepages=1280 >> /etc/sysctl.conf"
+```
+
+**Removing reservation:**
+```sh
+sudo sed -i '/vm.nr_hugepages=1280/d' /etc/sysctl.conf
+```
+
+ℹ️ You need to restart the container for the changes to take effect.
