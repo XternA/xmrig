@@ -33,7 +33,7 @@ A top mining pool choice for XMR is [SupportXMR](https://supportxmr.com/). To mi
 
 #### Without config file
 ```markdown
-docker run -d --restart always --name xmrig xterna/xmrig -k --tls -k --tls -o <POOL:PORT> -u <USER> -p <PASSWORD>
+docker run -d --restart always --name xmrig xterna/xmrig -k --tls -o <POOL:PORT> -u <USER> -p <PASSWORD>
 ```
 
 #### With config file
