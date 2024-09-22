@@ -14,26 +14,50 @@ This containerized XMRig will CPU mine very well on-par with bare-metal version,
 
 If you're new to Monero (XMR) mining and need a wallet/address, see [Exodus wallet](https://www.exodus.com/download/), supporting XMR and can swap to other currencies.
 
-## Getting Started
-
+## Quick Start 🚀
 The simplest execution to start mining:
 
 ```markdown
 docker run --rm xterna/xmrig -k --tls -o <POOL:PORT> -u <USER> -p <PASSWORD>
 ```
 
-A top choice for XMR mining is [SupportXMR](https://supportxmr.com/). To mine with SupportXMR, simply use your Monero wallet address as your username. Set the password as your alias, e.g. your host name for easy identificaition if running multiple nodes.
-
 **Example:**
-
 ```sh
 docker run --rm xterna/xmrig -k --tls -o pool.supportxmr.com:443 -u mW9G4TzVdEU5RX3KZp7A8fYRoZ1xg9BJnYH2iUeLkQvMdFwz8i6X6zRp5lSUjc -p Node-1
 ```
 
-**For Help and Commands:**
+## Getting Started
+A top mining pool choice for XMR is [SupportXMR](https://supportxmr.com/). To mine with SupportXMR, simply use your Monero wallet address as your username. Set the password as your alias, e.g. your host name for easy identification if running multiple nodes.
+
+### Run Recommendation
+
+#### Without config file
+```markdown
+docker run -d --restart always --name xmrig xterna/xmrig -k --tls -k --tls -o <POOL:PORT> -u <USER> -p <PASSWORD>
+```
+
+#### With config file
+```markdown
+docker run -d -v /host/path/to/file/config.json:/app/config.json --restart always --name xmrig xterna/xmrig
+```
+You must map the config to the exact path of the container to override the file, or it won't be used. Any changes to the `config.json` will require restarting the container.
+
+```
+docker restart xmrig
+```
+
+### Stop/Pause
+To stop or pause the miner:
+```sh
+docker stop xmrig
+docker pause xmrig
+```
+
+### For Help and Commands
 ```sh
 docker run --rm xterna/xmrig --help
 ```
+This will list the commands of the actual xmrig miner.
 
 ## Improve Performance (Linux)
 By increasing the `HugePages` memory management feature in Linux, you can easily increase the performance gain by up to 30%.
