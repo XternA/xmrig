@@ -1,8 +1,6 @@
 # XMRig ⛏️🐳
 
 [![Static Badge](https://img.shields.io/badge/GitHub-blue?style=flat&logo=github)](https://github.com/XternA/xmrig)
-[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/XternA/xmrig/docker-build-schedule.yml?branch=main&style=flat&logo=Github&label=New%20Release)](https://github.com/XternA/xmrig/actions/workflows/docker-build-schedule.yml)
-[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/XternA/xmrig/docker-publish.yml?branch=main&style=flat&logo=Github&label=Build)](https://github.com/XternA/xmrig/actions/workflows/docker-publish.yml)
 [![Docker Pulls](https://img.shields.io/docker/pulls/xterna/xmrig?logo=docker&label=Docker%20Pulls)](https://hub.docker.com/r/xterna/xmrig)
 [![Docker Stars](https://img.shields.io/docker/stars/xterna/xmrig?logo=docker&label=Docker%20Stars)](https://hub.docker.com/r/xterna/xmrig)
 [![Docker Image Version (tag)](https://img.shields.io/docker/v/xterna/xmrig?style=flat&logo=docker&label=Version)](https://hub.docker.com/r/xterna/xmrig/tags)
@@ -36,3 +34,18 @@ docker run --rm xterna/xmrig -k --tls -o pool.supportxmr.com:443 -u mW9G4TzVdEU5
 ```sh
 docker run --rm xterna/xmrig --help
 ```
+
+## Improve Performance (Linux)
+By increasing the `HugePages` memory management feature in Linux, you can easily increase the performance gain by up to 30%.
+
+Using the following command will set the `HugePages`:
+
+```sh
+# Get the script from the container
+docker cp xterna/xmrig:/app/huge-page.sh .
+
+# Run the script to adjust the HugePages
+sh huge-page.sh
+```
+
+You may need to restart the container in order for the changes to take effect.
