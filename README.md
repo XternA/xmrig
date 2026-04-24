@@ -1,77 +1,147 @@
-# XMRig ⛏️🐳
+# XMRig ⛏️ 🐳
 
-[![Static Badge](https://img.shields.io/badge/GitHub-blue?style=flat&logo=github)](https://github.com/XternA/xmrig)
+[![Static Badge](https://img.shields.io/badge/GitHub-blue?style=flat&logo=github)](https://github.com/XternA/xmrig-container)
 [![Docker Pulls](https://img.shields.io/docker/pulls/xterna/xmrig?logo=docker&label=Docker%20Pulls)](https://hub.docker.com/r/xterna/xmrig)
 [![Docker Stars](https://img.shields.io/docker/stars/xterna/xmrig?logo=docker&label=Docker%20Stars)](https://hub.docker.com/r/xterna/xmrig)
 [![Docker Image Version (tag)](https://img.shields.io/docker/v/xterna/xmrig?style=flat&logo=docker&label=Version)](https://hub.docker.com/r/xterna/xmrig/tags)
 [![Docker Image Size](https://img.shields.io/docker/image-size/xterna/xmrig?logo=docker&label=Image%20Size&color=red)](https://hub.docker.com/r/xterna/xmrig/tags)
-[![GitHub Repo stars](https://img.shields.io/github/stars/XternA/xmrig?style=flat&logo=github&label=Stars&color=orange)](https://github.com/XternA/xmrig)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=flat&logo=paypal)](https://www.paypal.com/donate/?hosted_button_id=32DCQ65QM5FNE)
+[![GitHub Repo stars](https://img.shields.io/github/stars/XternA/xmrig-container?style=flat&logo=github&label=Stars&color=orange)](https://github.com/XternA/xmrig-container)
 
-This [**XMRig**](https://hub.docker.com/r/xterna/xmrig) image is regularly updated with the latest releases and is built on Alpine for optimal performance and minimal size.
+A lightweight, containerised, performance-optimised [XMRig](https://github.com/xmrig/xmrig) miner for mining Monero. 
+Provide your pool details and start mining — no setup, no dependencies, no fuss.
 
-This containerized XMRig will CPU mine very well on-par with bare-metal version, ensuring minimal setup nor requiring additional binaries on the host.
+### Features
 
-If you're new to Monero (XMR) mining and need a wallet/address, see [Exodus wallet](https://www.exodus.com/download/), supporting XMR and can swap to other currencies.
+- 🔒 **Isolated and sandboxed** — runs as non-root, self-contained, host stays clean, removes without a trace
+- 🏔️ **Lightweight Alpine image** — native builds for amd64 & arm64
+- 🎯 **Ready to mine** — sensible defaults pre-configured, no setup required
+
 
 ## Quick Start 🚀
-The simplest execution to start mining:
+
+The quickest way to start mining, supply your pool details and run.
 
 ```markdown
-docker run --rm xterna/xmrig -k --tls -o <POOL:PORT> -u <USER> -p <PASSWORD>
+docker run --rm -it ghcr.io/xterna/xmrig -o <pool_url> -u <wallet_address> -p <worker_name>
 ```
 
-**Example:**
-```sh
-docker run --rm xterna/xmrig -k --tls -o pool.supportxmr.com:443 -u mW9G4TzVdEU5RX3KZp7A8fYRoZ1xg9BJnYH2iUeLkQvMdFwz8i6X6zRp5lSUjc -p Node-1
-```
+| Flag | Description |
+|---|---|
+| `-o` | Pool address and port |
+| `-u` | Your XMR wallet address |
+| `-p` | Worker name for identification on the pool |
 
-## Getting Started
-A top mining pool choice for XMR is [SupportXMR](https://supportxmr.com/). To mine with SupportXMR, simply use your Monero wallet address as your username. Set the password as your alias, e.g. your host name for easy identification if running multiple nodes.
+Miner runs in interactive mode. Press `Ctrl+C` to stop and remove the miner.
 
-### Run Recommendation
+## Usage
 
-#### With config file
-Configure the config file at https://xmrig.com/wizard.
+### Zero Configuration (Recommended)
+
+Pass your pool details directly. The miner starts immediately with a pre-optimised config:
+
 ```markdown
-docker run -d -v /host/path/to/file/config.json:/app/config.json --restart always --name xmrig xterna/xmrig
-```
-You must map the config to the exact path of the container to override the file, or it won't be used. Any changes to the `config.json` will require restarting the container.
-
-ℹ️ After the miner starts for the first time it will inflate the config with more settings. You can then fine tune the config to match your setup. Use this guide as reference: https://xmrig.com/docs/miner/config.
-
-### Restart/Stop/Pause
-
-```sh
-docker restart xmrig
-docker stop xmrig
-docker pause xmrig
+docker run -d --name xmrig ghcr.io/xterna/xmrig -o <pool_url> -u <wallet_address> -p <worker_name>
 ```
 
-### For Help and Commands
+As environment variables:
 ```sh
-docker run --rm xterna/xmrig --help
+docker run -d --name xmrig ghcr.io/xterna/xmrig -o $POOL_URL -u $WALLET_ADDRESS -p $WORKER_NAME
 ```
-This will list the commands of the actual xmrig miner.
 
-## Improve Performance (Linux)
-By increasing the `huge pages` memory management feature in Linux, you can easily increase the performance gain by up to 30%.
+The miner is now running as a daemon.
 
-> Please note 1280 pages means 2560 MB of memory will be reserved for huge pages and become not available for other usage, in automatic mode the miner reserve precise count of huge pages.
+---
 
-**Temporary (until next reboot) reserve huge pages:**
+### Mounted Config File (Flexible Control)
+
+For advanced configuration — custom thread counts, multiple pools, algorithm tuning. 
+
+Generate a config using the [XMRig Wizard Helper](https://xmrig.com/wizard) and mount your config file:
+
 ```sh
+docker run -d --name xmrig -v /config_path/config.json:/app/config.json ghcr.io/xterna/xmrig
+```
+
+Your custom config is now used instead.
+
+> Ensure your config has `"autosave": false` and `"watch": false`. Auto-saving and file watching serve no purpose in a container. It will also inflate your config file, making it harder to maintain and remember your preferences.
+
+> Changes to `config.json` require a container restart to take effect.
+
+See [Config Wiki](https://xmrig.com/docs/miner/config) for all available options.
+
+---
+
+### Direct CLI Mode
+
+Pass `--cli` to bypass the internal config entirely and send all arguments directly to XMRig. This gives you complete control over every XMRig flag:
+
+```markdown
+docker run -d --name xmrig ghcr.io/xterna/xmrig \
+  --cli -o <pool_url> -u <wallet_address> -p <worker_name> -k --tls ...
+```
+
+> In CLI mode, the internal optimised config is not loaded. You control all settings via flags. Use `docker run --rm ghcr.io/xterna/xmrig --cli --help` for the full list of XMRig options.
+
+
+## Container Management
+
+```sh
+docker restart xmrig    # restart the miner
+docker stop xmrig       # stop the miner
+docker logs -f xmrig    # follow live output
+docker pause xmrig      # pause without stopping
+```
+
+For help and commands, see [XMRig documentation](https://xmrig.com/docs/miner/cli-options).
+
+```sh
+docker run --rm ghcr.io/xterna/xmrig --cli --help
+```
+
+## Donations
+
+- Default donation 1% (1 minute in 100 minutes) can be increased via the `donate-level` option in the config file.
+- XMR: `87LGyTzNrRCFGAAGVkKD6wL4a3xFpLAfh7JL3RbmbvhUgWW1BHbtrkT7M5wkMWEEvSQdz2VJemvfgYvVWnC49e7S6BRA9Xv`
+
+## RandomX Optimisation
+
+### Huge Pages
+
+Enabling huge pages on supported systems reduces TLB pressure on the RandomX scratchpad, lowering memory management overhead and improving hashrate by **up to 30%**.
+
+```sh
+# Temporary (resets on reboot)
 sudo sysctl -w vm.nr_hugepages=1280
-```
 
-**Permanent huge pages reservation:**
-```sh
+# Permanent
 sudo bash -c "echo vm.nr_hugepages=1280 >> /etc/sysctl.conf"
-```
 
-**Removing reservation:**
-```sh
+# Removing huge pages
 sudo sed -i '/vm.nr_hugepages=1280/d' /etc/sysctl.conf
 ```
 
-ℹ️ You need to restart the container for the changes to take effect.
+> Note: 1280 pages reserves 2560 MB exclusively for huge pages, unavailable for other use. The miner automatically uses the precise number it needs.
+
+Restart the container after configuring.
+
+---
+
+### MSR (Model Specific Register)
+
+MSR writes allow XMRig to tune CPU microarchitectural settings for RandomX, achieving optimal hashrates on supported hardware.
+
+#### Supported CPUs:
+- Intel (Nehalem, Westmere, Sandy Bridge, Ivy Bridge, Haswell, Broadwell and newer)
+- Ryzen (All Zen based CPUs: Ryzen, Threadripper, EPYC)
+
+Load the MSR module on the host:
+```sh
+sudo modprobe msr
+```
+
+Run the container with the `--privileged` flag:
+
+```markdown
+docker run --rm -it --privileged ghcr.io/xterna/xmrig -o <pool_url> -u <wallet_address> -p <worker_name>
+```
