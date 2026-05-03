@@ -1,14 +1,20 @@
-# XMRig ⛏️ 🐳
+<h1 align="center">
+🐳 XMRig ⛏️
+</h1>
 
-[![Static Badge](https://img.shields.io/badge/GitHub-blue?style=flat&logo=github)](https://github.com/XternA/xmrig-container)
-[![Docker Pulls](https://img.shields.io/docker/pulls/xterna/xmrig?logo=docker&label=Docker%20Pulls)](https://hub.docker.com/r/xterna/xmrig)
-[![Docker Stars](https://img.shields.io/docker/stars/xterna/xmrig?logo=docker&label=Docker%20Stars)](https://hub.docker.com/r/xterna/xmrig)
-[![Docker Image Version (tag)](https://img.shields.io/docker/v/xterna/xmrig?style=flat&logo=docker&label=Version)](https://hub.docker.com/r/xterna/xmrig/tags)
-[![Docker Image Size](https://img.shields.io/docker/image-size/xterna/xmrig?logo=docker&label=Image%20Size&color=red)](https://hub.docker.com/r/xterna/xmrig/tags)
-[![GitHub Repo stars](https://img.shields.io/github/stars/XternA/xmrig-container?style=flat&logo=github&label=Stars&color=orange)](https://github.com/XternA/xmrig-container)
+<div align="center">
 
-A lightweight, containerised, performance-optimised [XMRig](https://github.com/xmrig/xmrig) miner for mining Monero. 
+If you like this project, don't forget to leave a star. ⭐
+
+[![Static Badge](https://img.shields.io/badge/GitHub-blue?style=flat&logo=github)](https://github.com/XternA/xmrig)
+[![Static Badge](https://img.shields.io/badge/License-purple?style=flat&logo=github)](https://github.com/XternA/xmrig?tab=License-1-ov-file)
+![GitHub package.json dynamic](https://img.shields.io/github/package-json/version/XternA/xmrig?style=flat&logo=opencontainersinitiative&label=Image%20Tag&color=red)
+[![GitHub Repo stars](https://img.shields.io/github/stars/XternA/xmrig-container?style=flat&logo=github&label=Stars&color=orange)](https://github.com/XternA/xmrig)
+
+
+A lightweight, containerized, performance-optimised [XMRig](https://github.com/xmrig/xmrig) miner for mining Monero. 
 Provide your pool details and start mining — no setup, no dependencies, no fuss.
+</div>
 
 ### Features
 
