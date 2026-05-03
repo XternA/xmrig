@@ -1,0 +1,6 @@
+{
+  "name": "xmrig",
+  "version": "6.26.0",
+  "description": "Containerized XMRig miner",
+  "author": "XternA"
+}
