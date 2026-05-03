@@ -8,20 +8,21 @@ If you like this project, don't forget to leave a star. ⭐
 
 [![Static Badge](https://img.shields.io/badge/GitHub-blue?style=flat&logo=github)](https://github.com/XternA/xmrig)
 [![Static Badge](https://img.shields.io/badge/License-purple?style=flat&logo=github)](https://github.com/XternA/xmrig?tab=License-1-ov-file)
+[![GitHub Release Date](https://img.shields.io/github/release-date/XternA/xmrig?style=&label=Latest%20Release)](https://github.com/XternA/xmrig/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/XternA/xmrig?sort=date&display_name=release&style=flat&label=Version)](https://github.com/XternA/xmrig/releases/latest)
 ![GitHub package.json dynamic](https://img.shields.io/github/package-json/version/XternA/xmrig?style=flat&logo=opencontainersinitiative&label=Image%20Tag&color=red)
 [![GitHub Repo stars](https://img.shields.io/github/stars/XternA/xmrig?style=flat&logo=github&label=Stars&color=orange)](https://github.com/XternA/xmrig)
 
-
-A lightweight, containerized, performance-optimised [XMRig](https://github.com/xmrig/xmrig) miner for mining Monero. 
-Provide your pool details and start mining — no setup, no dependencies, no fuss.
 </div>
+
+A lightweight, containerized, performance-optimised [XMRig](https://github.com/xmrig/xmrig) miner for mining Monero.
+Provide your pool details and start mining — no setup, no dependencies, no fuss.
 
 ### Features
 
 - 🔒 **Isolated and sandboxed** — runs as non-root, self-contained, host stays clean, removes without a trace
 - 🏔️ **Lightweight Alpine image** — native builds for amd64 & arm64
 - 🎯 **Ready to mine** — sensible defaults pre-configured, no setup required
-
 
 ## Quick Start 🚀
 
