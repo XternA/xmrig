@@ -13,7 +13,7 @@ XMRig
 
 If you like this project, don't forget to leave a star. ⭐
 
-![Logo](./assets/banner.svg)
+<img alt="banner" src="https://github.com/user-attachments/assets/42b8c854-e743-4560-a845-651b50718f84" />
 
 </div>
 
