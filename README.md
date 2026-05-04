@@ -1,8 +1,8 @@
-<h1 align="center">
-  <img alt="XMRig" src="https://github.com/user-attachments/assets/42b8c854-e743-4560-a845-651b50718f84" />
-</h1>
-
 <div align="center">
+
+<img alt="XMRig" src="https://github.com/user-attachments/assets/42b8c854-e743-4560-a845-651b50718f84" />
+
+If you like this project, don't forget to leave a star. ⭐
 
 [![Static Badge](https://img.shields.io/badge/GitHub-blue?style=flat&logo=github)](https://github.com/XternA/xmrig)
 [![Static Badge](https://img.shields.io/badge/License-purple?style=flat&logo=github)](https://github.com/XternA/xmrig?tab=License-1-ov-file)
@@ -11,33 +11,60 @@
 ![GitHub package.json dynamic](https://img.shields.io/github/package-json/version/XternA/xmrig?style=flat&logo=opencontainersinitiative&label=Image%20Tag&color=red)
 [![GitHub Repo stars](https://img.shields.io/github/stars/XternA/xmrig?style=flat&logo=github&label=Stars&color=orange)](https://github.com/XternA/xmrig)
 
-If you like this project, don't forget to leave a star. ⭐
-
 </div>
 
-----
-
-A lightweight, containerized, performance-optimised [XMRig](https://github.com/xmrig/xmrig) miner for mining Monero.
+A lightweight, containerized and performance-optimised [XMRig](https://github.com/xmrig/xmrig) miner.
 Provide your pool details and start mining — no setup, no dependencies, no fuss.
 
 ### Features
 
 - 🔒 **Isolated and sandboxed** — runs as non-root, self-contained, host stays clean, removes without a trace
-- 🏔️ **Lightweight Alpine image** — native builds for amd64 & arm64
-- 🎯 **Ready to mine** — sensible defaults pre-configured, no setup required
+- 🏔️ **Lightweight Alpine image** — native CPU builds for amd64 & arm64
+- 🟢 **CUDA GPU support** — dedicated NVIDIA GPU image for accelerated mining
+- 🎯 **Ready to mine** — sensible defaults pre-configured, all algorithms enabled
 
-## Quick Start 🚀
+### Available Images
 
-The quickest way to start mining, supply your pool details and run.
+| Image | Tag | Platform | Description |
+|---|---|---|---|
+| CPU | `latest`, `<version>` | amd64, arm64 | CPU mining |
+| CUDA | `cuda`, `cuda-<version>` | amd64 | CPU + NVIDIA GPU mining |
+
+## Quick Start
+
+### CPU Mining
 
 ```markdown
 docker run --rm -it ghcr.io/xterna/xmrig -o <pool_url> -u <wallet_address> -p <worker_name>
 ```
 
+### GPU Mining (CUDA)
+
+**Docker Desktop (Windows)** — GPU support is built in. Just run:
+
+```markdown
+docker run --rm -it ghcr.io/xterna/xmrig:cuda -o <pool_url> -u <wallet_address> -p <worker_name>
+```
+
+**Linux / WSL2 (Docker Engine)** — one-time setup, then mine:
+
+```sh
+# Install NVIDIA Container Toolkit (one-time)
+curl -fsSL https://github.com/XternA/xmrig/raw/main/nvidia-toolkit.sh | bash
+
+# Start mining
+docker run --rm -it ghcr.io/xterna/xmrig:cuda -o <pool_url> -u <wallet_address> -p <worker_name>
+```
+
+To remove the toolkit later:
+```sh
+curl -fsSL https://github.com/XternA/xmrig/raw/main/nvidia-toolkit.sh | bash -s -- --uninstall
+```
+
 | Flag | Description |
 |---|---|
 | `-o` | Pool address and port |
-| `-u` | Your XMR wallet address |
+| `-u` | Your wallet address |
 | `-p` | Worker name for identification on the pool |
 
 Miner runs in interactive mode. Press `Ctrl+C` to stop and remove the miner.
@@ -50,6 +77,11 @@ Pass your pool details directly. The miner starts immediately with a pre-optimis
 
 ```markdown
 docker run -d --name xmrig ghcr.io/xterna/xmrig -o <pool_url> -u <wallet_address> -p <worker_name>
+```
+
+For GPU mining, use the `cuda` tag:
+```markdown
+docker run -d --name xmrig ghcr.io/xterna/xmrig:cuda -o <pool_url> -u <wallet_address> -p <worker_name>
 ```
 
 As environment variables:
@@ -113,11 +145,11 @@ docker run --rm ghcr.io/xterna/xmrig --cli --help
 - Default donation 1% (1 minute in 100 minutes) can be increased via the `donate-level` option in the config file.
 - XMR: `87LGyTzNrRCFGAAGVkKD6wL4a3xFpLAfh7JL3RbmbvhUgWW1BHbtrkT7M5wkMWEEvSQdz2VJemvfgYvVWnC49e7S6BRA9Xv`
 
-## RandomX Optimisation
+## CPU Optimisation (RandomX)
 
 ### Huge Pages
 
-Enabling huge pages on supported systems reduces TLB pressure on the RandomX scratchpad, lowering memory management overhead and improving hashrate by **up to 30%**.
+Enabling huge pages on supported systems reduces TLB pressure, lowering memory management overhead and improving CPU hashrate by **up to 30%**.
 
 ```sh
 # Temporary (resets on reboot)
