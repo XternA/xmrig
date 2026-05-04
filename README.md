@@ -1,5 +1,5 @@
 <h1 align="center">
-XMRig
+  <img alt="XMRig" src="https://github.com/user-attachments/assets/42b8c854-e743-4560-a845-651b50718f84" />
 </h1>
 
 <div align="center">
@@ -13,9 +13,9 @@ XMRig
 
 If you like this project, don't forget to leave a star. ⭐
 
-<img alt="banner" src="https://github.com/user-attachments/assets/42b8c854-e743-4560-a845-651b50718f84" />
-
 </div>
+
+----
 
 A lightweight, containerized, performance-optimised [XMRig](https://github.com/xmrig/xmrig) miner for mining Monero.
 Provide your pool details and start mining — no setup, no dependencies, no fuss.
