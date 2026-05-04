@@ -1,6 +1,6 @@
 <div align="center">
 
-<img alt="XMRig" src="https://github.com/user-attachments/assets/42b8c854-e743-4560-a845-651b50718f84" />
+<img alt="XMRig" src="https://github.com/user-attachments/assets/b2746627-61c6-4ddc-be33-ff22ac8e6ca4" />
 
 If you like this project, don't forget to leave a star. ⭐
 
