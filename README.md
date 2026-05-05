@@ -61,13 +61,18 @@ To remove the toolkit later:
 curl -fsSL https://github.com/XternA/xmrig/raw/main/nvidia-toolkit.sh | bash -s -- --uninstall
 ```
 
+Miner runs in interactive mode. Press `Ctrl+C` to stop and remove the miner.
+
+## Flags
+
 | Flag | Description |
 |---|---|
 | `-o` | Pool address and port |
 | `-u` | Your wallet address |
-| `-p` | Worker name for identification on the pool |
-
-Miner runs in interactive mode. Press `Ctrl+C` to stop and remove the miner.
+| `-p` | Worker name |
+| `--no-cpu` | Disable CPU mining — GPU only (CUDA image) |
+| `--no-gpu` | Disable GPU mining — CPU only (CUDA image) |
+| `--cli` | Bypass config entirely, pass all flags directly to XMRig |
 
 ## Usage
 
